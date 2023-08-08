@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PathController : MonoBehaviour
 {
+    public static PathController pathController;
 
     [System.Serializable] 
     public class SerializableClass
