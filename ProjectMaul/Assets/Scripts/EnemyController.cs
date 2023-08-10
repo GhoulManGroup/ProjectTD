@@ -5,38 +5,36 @@ using static UnityEngine.GraphicsBuffer;
 
 public class EnemyController : MonoBehaviour
 {
-    PathController PathManager;
+    [SerializeField]
+    GameObject pathManager;
+    PathController pathScript;
 
     [Header("Enemy Variables")]
-    int health;
+
+    int startingHealth = 100;
+    int currentHealth;
     int damage;
-    int movementSpeed;
+    float movementSpeed;
 
     [Header("Pathfinding")]
-    private bool destinationReached; // reached the end of the path.
+    private bool destinationReached = false; // reached the end of the path.
     int path; //Which path we are using from the path list.
     int currentPoint; // Which point in the path we are currently going towards.
 
     // Start is called before the first frame update
     void Start()
     {
-        PathController PathManager = GameObject.FindGameObjectWithTag("PathManager").GetComponent<PathController>();
+        pathScript = pathManager.GetComponent<PathController>();
+        currentHealth = startingHealth;
         AssignPath();
         StartCoroutine("Movement");
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
 
     public void AssignPath()
     {
         path = 0;
         currentPoint = 0;
-        this.transform.position = PathManager.LevelPaths[0].Levelpath[currentPoint].transform.position;
+        this.transform.position = pathManager.GetComponent<PathController>().LevelPaths[0].Levelpath[currentPoint].transform.position;
     }
 
     public IEnumerator Movement()
@@ -51,26 +49,45 @@ public class EnemyController : MonoBehaviour
 
     private void Destination()
     {
-        transform.position = Vector3.MoveTowards(transform.position, PathManager.LevelPaths[0].Levelpath[currentPoint].transform.position, 1);
 
-        if (transform.position == PathManager.LevelPaths[0].Levelpath[currentPoint].transform.position)
+        if (transform.position == pathScript.LevelPaths[0].Levelpath[currentPoint].transform.position)
         {
-            currentPoint += 1;
+            if (currentPoint == pathScript.LevelPaths[0].Levelpath.Count - 1)
+            {
+                Debug.Log("Reached End");
+                destinationReached = true;
+            }
+            else
+            {
+                currentPoint += 1;
+            }
         }
-    }
-
-    public void UpdateDestination()
-    {
-
     }
 
     private void Speed()
     {
-
+        transform.position = Vector3.MoveTowards(transform.position, pathScript.LevelPaths[0].Levelpath[currentPoint].transform.position, movementSpeed * Time.deltaTime);
     }
 
-    public void UpdateMovementSpeed()
+    public void UpdateMovementSpeed(float newValue)
     {
+        movementSpeed = newValue;
+    }
 
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+
+        CheckState();
+    }
+
+    private void CheckState()
+    {
+        if (currentHealth >= 0)
+        {
+            // contact wave manager and say I died
+            // move me off screen away from the rest of the game.
+            this.gameObject.SetActive(false);
+        }
     }
 }
