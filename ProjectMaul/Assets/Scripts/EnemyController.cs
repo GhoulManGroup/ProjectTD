@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -13,8 +15,11 @@ public class EnemyController : MonoBehaviour
 
     int startingHealth = 100;
     int currentHealth;
-    int damage;
-    float movementSpeed;
+
+    int damage = 50;
+
+    [SerializeField]
+    float movementSpeed = 3;
 
     [Header("Pathfinding")]
     private bool destinationReached = false; // reached the end of the path.
@@ -24,6 +29,7 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        pathManager = GameObject.FindGameObjectWithTag("PathManager");
         pathScript = pathManager.GetComponent<PathController>();
         currentHealth = startingHealth;
         AssignPath();
@@ -56,6 +62,8 @@ public class EnemyController : MonoBehaviour
             {
                 Debug.Log("Reached End");
                 destinationReached = true;
+                GameObject.FindGameObjectWithTag("PathManager").GetComponent<LevelManager>().TakeDamage(damage);
+                StartCoroutine("RemoveMe");
             }
             else
             {
@@ -74,20 +82,32 @@ public class EnemyController : MonoBehaviour
         movementSpeed = newValue;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, GameObject source )
     {
         currentHealth -= damage;
 
-        CheckState();
-    }
-
-    private void CheckState()
-    {
-        if (currentHealth >= 0)
+        if (currentHealth <= 0)
         {
+            Debug.LogError("DEAD!");
             // contact wave manager and say I died
-            // move me off screen away from the rest of the game.
-            this.gameObject.SetActive(false);
+            StartCoroutine("RemoveMe");
         }
     }
+
+    public IEnumerator RemoveMe()
+    {
+        for (int i = 0; i < GameObject.FindGameObjectWithTag("PathManager").GetComponent<LevelManager>().currentTowers.Count; i++)
+        {
+            if (GameObject.FindGameObjectWithTag("PathManager").GetComponent<LevelManager>().currentTowers.Contains(this.gameObject))
+            {
+                GameObject.FindGameObjectWithTag("PathManager").GetComponent<LevelManager>().currentTowers[i].GetComponent<TowerController>().targetList.Remove(this.gameObject);
+                GameObject.FindGameObjectWithTag("PathManager").GetComponent<LevelManager>().currentTowers[i].GetComponent<TowerController>().objectCurrentTarget = null;
+               GameObject.FindGameObjectWithTag("PathManager").GetComponent<LevelManager>().currentTowers[i].GetComponent<TowerController>().pickTarget();
+            }
+        }
+        yield return new WaitForSeconds(0.1f);
+        Destroy(this.gameObject);
+    }
+
+    
 }
