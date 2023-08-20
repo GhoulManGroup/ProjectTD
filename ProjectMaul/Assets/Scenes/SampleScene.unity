@@ -186,6 +186,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyToSpawn: {fileID: 5856643593673466864, guid: cf9c3f6285f429548a52ef130232758c, type: 3}
   currentTowers: []
+  width: 0
+  height: 0
+  PrefabToSpawn: {fileID: 0}
 --- !u!1 &78182949
 GameObject:
   m_ObjectHideFlags: 0
@@ -335,6 +338,7 @@ GameObject:
   - component: {fileID: 384940829}
   - component: {fileID: 384940828}
   - component: {fileID: 384940827}
+  - component: {fileID: 384940831}
   m_Layer: 0
   m_Name: Tile
   m_TagString: Untagged
@@ -375,7 +379,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 729b387dd165a77498a7b6ddc1ac01fc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -419,6 +423,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &384940831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384940826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ff45a2ca834b35439b0164688f57f50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

@@ -50,4 +50,22 @@ public class LevelManager : MonoBehaviour
             Debug.LogError("Game Over");
         }
     }
+
+    #region SpawnLevelQuickly
+    [SerializeField]
+    int width;
+    [SerializeField]
+    int height;
+    [SerializeField]
+    GameObject PrefabToSpawn;
+    [ContextMenu("Spawn level tile grid 1x1 quickly using this method")]
+    public void SpawnLevelTemplate()
+    {
+        for (int i = 0; i < height; i++)
+        {
+
+        }
+    }
+
+    #endregion
 }
