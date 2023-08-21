@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class BuildTile : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject SpawnTower;
+    public void OnMouseDown()
     {
-        
+        Instantiate(SpawnTower, new Vector3(this.transform.position.x, 0.6f, this.transform.position.z), Quaternion.identity);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }
