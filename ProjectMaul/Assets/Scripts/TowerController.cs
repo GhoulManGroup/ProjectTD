@@ -14,13 +14,17 @@ public class TowerController : MonoBehaviour
 
     public GameObject Projectile;
 
+    public Tower MyTower;
+
     [Header("Attack Details")]
     float attackTimer = 3;
     int damage;
+    public int myCost = 25;
 
     public void Start()
     {
         GameObject.FindGameObjectWithTag("PathManager").GetComponent<LevelManager>().currentTowers.Add(this.gameObject);
+        
     }
 
     public void pickTarget()

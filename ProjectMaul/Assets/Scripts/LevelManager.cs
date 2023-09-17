@@ -7,12 +7,12 @@ public class LevelManager : MonoBehaviour
 {
     PathController pathScript;
 
-    int playerLife = 100;
-    int playerGold;
-    int currentLevel;
-    int levelCap;
+    public int playerLife = 100;
+    public int playerGold = 100;
+    public int currentLevel;
+    public int levelCap;
 
-    float waveTimer;
+    public float waveTimer;
 
     public GameObject EnemyToSpawn;
     int enimiesToSpawn = 8;
@@ -49,6 +49,11 @@ public class LevelManager : MonoBehaviour
         {
             Debug.LogError("Game Over");
         }
+    }
+
+    public void ChooseTower(Tower myTower)
+    {
+
     }
 
     #region SpawnLevelQuickly
