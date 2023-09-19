@@ -18,13 +18,15 @@ public class BuildTile : MonoBehaviour
 
     public void OnMouseDown()
     {
-        if (MyTower == null)
+        if (lvlRef.activeTower != null && MyTower == null)
         {
-            if (lvlRef.playerGold >= SpawnTower.GetComponent<TowerController>().myCost)
+            if (lvlRef.playerGold >= lvlRef.activeTower.Cost)
             {
-                lvlRef.playerGold -= SpawnTower.GetComponent<TowerController>().myCost;
+                Debug.Log("Inside Stuff");
+                lvlRef.playerGold -= lvlRef.activeTower.Cost;
                 Instantiate(SpawnTower, new Vector3(this.transform.position.x, 0.6f, this.transform.position.z), Quaternion.identity);
                 MyTower = SpawnTower;
+                SpawnTower.GetComponent<TowerController>().MyTower = lvlRef.activeTower;
             }
             else
             {

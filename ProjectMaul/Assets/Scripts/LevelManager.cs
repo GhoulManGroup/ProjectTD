@@ -51,9 +51,10 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    public Tower activeTower;
     public void ChooseTower(Tower myTower)
     {
-
+        activeTower = myTower;
     }
 
     #region SpawnLevelQuickly
