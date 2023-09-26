@@ -10,20 +10,27 @@ public class TowerPickController : MonoBehaviour
     List<Tower> towerList = new List<Tower>();
     [SerializeField]
     List<Button> towerPickBTNs = new List<Button>();
+    public LevelManager testing;
 
     public void activeTower(int towerPicked)
     {
-        GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelManager>().activeTower = towerList[towerPicked];
+        GameObject.FindGameObjectWithTag("PathManager").GetComponent<LevelManager>().activeTower = towerList[towerPicked];
+    }
+
+    public void Start()
+    {
+        AffordanceCheck();
+        testing = GameObject.FindGameObjectWithTag("GameController").GetComponentInChildren<LevelManager>();
     }
 
     public void AffordanceCheck()
     {
         for (int i = 0; i < towerList.Count; i++)
         {
-            if (GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelManager>().playerGold < towerList[i].Cost)
+            if (GameObject.FindGameObjectWithTag("PathManager").GetComponent<LevelManager>().playerGold < towerList[i].Cost)
             {
                 towerPickBTNs[i].interactable = false;
-            }else if (GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelManager>().playerGold >= towerList[i].Cost)
+            }else if (GameObject.FindGameObjectWithTag("PathManager").GetComponent<LevelManager>().playerGold >= towerList[i].Cost)
             {
                 towerPickBTNs[i].interactable = true;
             }
