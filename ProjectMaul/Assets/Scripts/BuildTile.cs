@@ -27,6 +27,7 @@ public class BuildTile : MonoBehaviour
                 Instantiate(SpawnTower, new Vector3(this.transform.position.x, 0.6f, this.transform.position.z), Quaternion.identity);
                 MyTower = SpawnTower;
                 SpawnTower.GetComponent<TowerController>().MyTower = lvlRef.activeTower;
+                GameObject.FindGameObjectWithTag("CanvasManager").GetComponentInChildren<TowerPickController>().AffordanceCheck();
             }
             else
             {

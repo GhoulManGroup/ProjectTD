@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class TowerPickController : MonoBehaviour
 {
@@ -11,6 +12,10 @@ public class TowerPickController : MonoBehaviour
     [SerializeField]
     List<Button> towerPickBTNs = new List<Button>();
     public LevelManager testing;
+    [SerializeField]
+    TextMeshProUGUI Gold;
+    [SerializeField]
+    TextMeshPro Life;
 
     public void activeTower(int towerPicked)
     {
@@ -35,5 +40,6 @@ public class TowerPickController : MonoBehaviour
                 towerPickBTNs[i].interactable = true;
             }
         }
+
     }
 }

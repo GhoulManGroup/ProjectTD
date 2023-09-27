@@ -10,6 +10,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     GameObject pathManager;
     PathController pathScript;
+    LevelManager levelScript;
 
     [Header("Enemy Variables")]
 
@@ -17,6 +18,8 @@ public class EnemyController : MonoBehaviour
     int currentHealth;
 
     int damage = 50;
+
+    int bounty = 10;
 
     [SerializeField]
     float movementSpeed = 3;
@@ -31,6 +34,7 @@ public class EnemyController : MonoBehaviour
     {
         pathManager = GameObject.FindGameObjectWithTag("PathManager");
         pathScript = pathManager.GetComponent<PathController>();
+        levelScript = pathManager.GetComponent<LevelManager>();
         currentHealth = startingHealth;
         AssignPath();
         StartCoroutine("Movement");
@@ -89,7 +93,8 @@ public class EnemyController : MonoBehaviour
         if (currentHealth <= 0)
         {
             Debug.LogError("DEAD!");
-            // contact wave manager and say I died
+            levelScript.playerGold += bounty;
+            GameObject.FindGameObjectWithTag("CanvasManager").GetComponentInChildren<TowerPickController>().AffordanceCheck();
             StartCoroutine("RemoveMe");
         }
     }
