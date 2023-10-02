@@ -23,8 +23,7 @@ public class TowerController : MonoBehaviour
 
     public void Start()
     {
-        GameObject.FindGameObjectWithTag("PathManager").GetComponent<LevelManager>().currentTowers.Add(this.gameObject);
-        
+        GameObject.FindGameObjectWithTag("PathManager").GetComponent<LevelManager>().currentTowers.Add(this.gameObject);      
     }
 
     public void pickTarget()

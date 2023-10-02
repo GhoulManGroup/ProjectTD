@@ -67,6 +67,7 @@ public class EnemyController : MonoBehaviour
                 Debug.Log("Reached End");
                 destinationReached = true;
                 GameObject.FindGameObjectWithTag("PathManager").GetComponent<LevelManager>().TakeDamage(damage);
+                GameObject.FindGameObjectWithTag("CanvasManager").GetComponentInChildren<TowerPickController>().UpdateLife();
                 StartCoroutine("RemoveMe");
             }
             else
@@ -86,15 +87,17 @@ public class EnemyController : MonoBehaviour
         movementSpeed = newValue;
     }
 
+    bool alive = true;
     public void TakeDamage(int damage, GameObject source )
     {
         currentHealth -= damage;
 
-        if (currentHealth <= 0)
+        if (alive == true && currentHealth <= 0)
         {
-            Debug.LogError("DEAD!");
+            alive = false;
             levelScript.playerGold += bounty;
             GameObject.FindGameObjectWithTag("CanvasManager").GetComponentInChildren<TowerPickController>().AffordanceCheck();
+            GameObject.FindGameObjectWithTag("CanvasManager").GetComponentInChildren<TowerPickController>().UpdateGold();
             StartCoroutine("RemoveMe");
         }
     }
@@ -112,7 +115,5 @@ public class EnemyController : MonoBehaviour
         }
         yield return new WaitForSeconds(0.1f);
         Destroy(this.gameObject);
-    }
-
-    
+    }   
 }

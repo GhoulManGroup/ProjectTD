@@ -11,11 +11,13 @@ public class TowerPickController : MonoBehaviour
     List<Tower> towerList = new List<Tower>();
     [SerializeField]
     List<Button> towerPickBTNs = new List<Button>();
-    public LevelManager testing;
+    LevelManager LvlManager;
+    [SerializeField]
+    TextMeshProUGUI Timer;
     [SerializeField]
     TextMeshProUGUI Gold;
     [SerializeField]
-    TextMeshPro Life;
+    TextMeshProUGUI Life;
 
     public void activeTower(int towerPicked)
     {
@@ -25,7 +27,7 @@ public class TowerPickController : MonoBehaviour
     public void Start()
     {
         AffordanceCheck();
-        testing = GameObject.FindGameObjectWithTag("GameController").GetComponentInChildren<LevelManager>();
+        LvlManager = GameObject.FindGameObjectWithTag("GameController").GetComponentInChildren<LevelManager>();
     }
 
     public void AffordanceCheck()
@@ -35,11 +37,26 @@ public class TowerPickController : MonoBehaviour
             if (GameObject.FindGameObjectWithTag("PathManager").GetComponent<LevelManager>().playerGold < towerList[i].Cost)
             {
                 towerPickBTNs[i].interactable = false;
-            }else if (GameObject.FindGameObjectWithTag("PathManager").GetComponent<LevelManager>().playerGold >= towerList[i].Cost)
+            }
+            else if (GameObject.FindGameObjectWithTag("PathManager").GetComponent<LevelManager>().playerGold >= towerList[i].Cost)
             {
                 towerPickBTNs[i].interactable = true;
             }
         }
+    }
+
+    public void UpdateGold()
+    {
+        Gold.text = "Current Gold : " + LvlManager.playerGold.ToString();
+    }
+
+    public void UpdateLife()
+    {
+        Life.text = "Current Life : " + LvlManager.playerLife.ToString();
+    }
+    
+    public void UpdateTimer()
+    {
 
     }
 }
